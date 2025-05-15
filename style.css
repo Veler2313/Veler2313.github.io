@@ -1,0 +1,59 @@
+
+:root {
+    --background-color: #00000016;
+    --main-color: #00ff00;
+    --sec-color: #69ff69;
+  }
+
+button {
+    user-select: none;
+    background-color: #2e2e2e;
+    color: white;
+    border: 2px solid var(--main-color);
+    padding: 10px 20px;
+    width: 150px;
+    height: 40px;
+    margin: 5px;
+    font-size: 16px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px var(--main-color), 0 0 10px var(--main-color);
+  }
+  
+  button:hover {
+    background-color: #525252;
+    box-shadow: 0 0 10px var(--main-color), 0 0 20px var(--main-color);
+    color: var(--main-color);
+  }
+  
+button:active {
+    background-color: var(--main-color);
+    color: #525252;
+    box-shadow: 0 0 15px var(--main-color), 0 0 30px var(--main-color);
+    transform: scale(0.95);
+  }
+
+  
+h1 {
+    color: var(--sec-color);
+    text-shadow: 0 0 5px #000000, 0 0 10px #000000;
+    transition: all 0.3s ease;
+    font-size: 25px;
+  }
+
+p {
+    color: var(--sec-color);
+    font-size: 35px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #000000, 0 0 10px #000000;
+}
+
+p:hover {
+    text-shadow: 1px 1px 2px var(--main-color);
+    font-weight: 700;
+}
+
+p:active {
+    color: white;
+}

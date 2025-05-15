@@ -1,0 +1,185 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+  meTime();
+  meUser();
+  const gb = document.getElementById("gmailButton")
+  if (gb){
+    gb.addEventListener("click", () => {
+      // Open the link in a new tab
+      window.location.href = "https://mail.google.com/mail/u/0/#inbox";
+    });
+  }
+  const mb = document.getElementById("meetButton")
+  if (mb){
+    mb.addEventListener("click", () => {
+      // Open the link in a new tab
+      window.location.href = "https://meet.google.com/";
+    });
+  }
+});
+
+setInterval(() => { meTime(); }, 1000);
+setInterval(() => { meUser(); }, 700);
+
+let qMark = false;
+
+function meTime(){
+  const element = document.getElementById("datetime");
+  if (element)
+  {
+    var now = new Date();
+    let hours = now.getHours();
+    hours = hours % 12 || 12; // Converts "0" (midnight) to "12"
+    const amPm = hours >= 12 ? "PM" : "AM";
+    var datetime = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear()
+    + " " + getDayName(now.getDay()) + " " + hours + ":"
+    + now.getMinutes().toString().padStart(2, "0") + " " + amPm;
+    element.textContent = datetime;
+  }
+  else
+  {
+    console.error("Element with id 'datetime' not found.");
+  }
+}
+function meUser(){
+  const user = document.getElementById("user");
+  if (user)
+  {
+    if (qMark)
+    {
+      user.textContent = "root?";
+      qMark = false;
+    }
+    else
+    {
+      user.textContent = "root ";
+      qMark = true;
+    }
+  }
+  else
+  {
+    console.error("Element with id 'user' not found.");
+  }
+}
+
+function getDayName(dayNumber) {
+  const daysOfWeek = [
+    "Sunday",    // 0
+    "Monday",    // 1
+    "Tuesday",   // 2
+    "Wednesday", // 3
+    "Thursday",  // 4
+    "Friday",    // 5
+    "Saturday"   // 6
+  ];
+
+  // Ensure dayNumber is valid
+  if (dayNumber < 0 || dayNumber > 6) {
+    return "Invalid day number";
+  }
+
+  return daysOfWeek[dayNumber];
+}
+
+class TriggerWord {
+  constructor(word, action) {
+    this.word = word;
+    this.action = action;
+  }
+}
+
+let latestKey = '';
+let typedBuffer = '';
+const triggers = [
+  new TriggerWord('meet', () => { window.location.href = "https://meet.google.com/"; } ),
+  new TriggerWord('gmail', () => { window.location.href = "https://mail.google.com/mail/u/0/#inbox"; } ),
+  new TriggerWord('hello', () => { window.location.href = "https://chatgpt.com/"; }),
+
+  new TriggerWord('green', () => {
+    document.documentElement.style.setProperty('--main-color', '#00ff00');
+    document.documentElement.style.setProperty('--sec-color', '#69ff69');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('red', () => {
+    document.documentElement.style.setProperty('--main-color', '#ff0000');
+    document.documentElement.style.setProperty('--sec-color', '#ff6969');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('blue', () => {
+    document.documentElement.style.setProperty('--main-color', '#0000ff');
+    document.documentElement.style.setProperty('--sec-color', '#6969ff');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('white', () => {
+    document.documentElement.style.setProperty('--main-color', '#ffffff');
+    document.documentElement.style.setProperty('--sec-color', '#888888');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('yellow', () => {
+    document.documentElement.style.setProperty('--main-color', '#ffff00');
+    document.documentElement.style.setProperty('--sec-color', '#ffff69');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('gold', () => {
+    document.documentElement.style.setProperty('--main-color', '#ffc800');
+    document.documentElement.style.setProperty('--sec-color', '#ffe173');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('orange', () => {
+    document.documentElement.style.setProperty('--main-color', '#ffa200');
+    document.documentElement.style.setProperty('--sec-color', '#ffc663');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('purple', () => {
+    document.documentElement.style.setProperty('--main-color', '#b300ff');
+    document.documentElement.style.setProperty('--sec-color', '#d269ff');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('pink', () => {
+    document.documentElement.style.setProperty('--main-color', '#ff61d7');
+    document.documentElement.style.setProperty('--sec-color', '#ff99e5');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('megenta', () => {
+    document.documentElement.style.setProperty('--main-color', '#ff008c');
+    document.documentElement.style.setProperty('--sec-color', '#ff70bf');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('cyan', () => {
+    document.documentElement.style.setProperty('--main-color', '#00ffff');
+    document.documentElement.style.setProperty('--sec-color', '#69ffff');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('teal', () => {
+    document.documentElement.style.setProperty('--main-color', '#00ff95');
+    document.documentElement.style.setProperty('--sec-color', '#5cffbb');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('black', () => {
+    document.documentElement.style.setProperty('--main-color', '#000000');
+    document.documentElement.style.setProperty('--sec-color', '#000000');
+    document.documentElement.style.setProperty('--background-color', '#ffffff16');
+  }),
+
+  new TriggerWord('yes', () => { alert('OK'); }),
+];
+
+document.addEventListener('keydown', (event) => {
+  // Ignore special keys like Shift, Ctrl, etc.
+  if (event.key.length === 1) {
+    latestKey = event.key;
+    typedBuffer += latestKey;
+
+    // Optional: keep buffer short if you expect short words
+    if (typedBuffer.length > 20) {
+      typedBuffer = typedBuffer.slice(-20); // keep last 20 characters
+    }
+
+    // Check if buffer ends with any trigger word
+    for (const trigger of triggers) {
+      if (typedBuffer.endsWith(trigger.word)) {
+        trigger.action(); // Call the associated function
+      }
+    }
+  }
+});
