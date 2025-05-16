@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
-  drawMatrix();
-});
 
-let color = "#0f0";
-let backgroundColor = "#00000016";
+document.addEventListener("DOMContentLoaded", () => {
+	drawMatrix();
+
+	setInterval(colorize, 100);
+	setInterval(colorB, 100);
+});
 
 function drawMatrix() {
 	
@@ -24,6 +25,27 @@ function drawMatrix() {
 	// set value to columns
 	for (let i = 0; i < columns; i++) {
 		drops[i] = Math.random() * canvas.height;
+	}
+
+	// reset on resize
+	window.addEventListener('resize', () => {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		drops.length = 0;
+		for (let i = 0; i < canvas.width / fontSize; i++) {
+			drops[i] = Math.random() * canvas.height;
+		}
+		for (let i = 0; i <= 80; i++)
+		{
+			draw();
+		}
+	});
+
+	// play the animation every X miliseconds (almost 1000 / X fps)
+	setInterval(draw, 55);
+	for (let i = 0; i <= 80; i++)
+	{
+		draw();
 	}
 
 	function draw() {
@@ -47,33 +69,21 @@ function drawMatrix() {
 			drops[i]++;
 		}
 	}
+}
 
-	// play the animation every X miliseconds (almost 1000 / X fps)
-	setInterval(draw, 55);
-	setInterval(color, 100);
-	setInterval(colorB, 100);
+let color = "#0f0";
+let backgroundColor = "#00000016";
+	
+function colorize() {
+	const raw = getComputedStyle(document.documentElement)
+		.getPropertyValue('--main-color')
+		.trim();
+	color = raw;
+}
 
-	// reset on resize
-	window.addEventListener('resize', () => {
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
-		drops.length = 0;
-		for (let i = 0; i < canvas.width / fontSize; i++) {
-			drops[i] = Math.random() * canvas.height;
-		}
-	});
-	
-	function color() {
-		const raw = getComputedStyle(document.documentElement)
-			.getPropertyValue('--main-color')
-			.trim();
-		color = raw;
-	}
-	
-	function colorB() {
-		const raw = getComputedStyle(document.documentElement)
-			.getPropertyValue('--background-color')
-			.trim();
-		backgroundColor = raw;
-	}
+function colorB() {
+	const raw = getComputedStyle(document.documentElement)
+		.getPropertyValue('--background-color')
+		.trim();
+	backgroundColor = raw;
 }
