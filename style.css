@@ -10,6 +10,7 @@ button {
     background-color: #2e2e2e;
     color: white;
     border: 2px solid var(--main-color);
+    border-radius: 5px;
     padding: 10px 20px;
     width: 150px;
     height: 40px;
@@ -21,11 +22,11 @@ button {
     text-shadow: 0 0 5px var(--main-color), 0 0 10px var(--main-color);
   }
   
-  button:hover {
-    background-color: #525252;
-    box-shadow: 0 0 10px var(--main-color), 0 0 20px var(--main-color);
-    color: var(--main-color);
-  }
+button:hover {
+  background-color: #525252;
+  box-shadow: 0 0 10px var(--main-color), 0 0 20px var(--main-color);
+  color: var(--main-color);
+}
   
 button:active {
     background-color: var(--main-color);
@@ -56,4 +57,52 @@ p:hover {
 
 p:active {
     color: white;
+}
+
+/* Overlay Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Increased z-index */
+}
+
+.overlay-content {
+  background: #1e1e1e;
+  color: #33ff33;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: monospace;
+  min-width: 400px;
+  box-shadow: 0 0 10px #000;
+}
+
+.terminal-header {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.terminal-body {
+  display: flex;
+  align-items: center;
+}
+
+.terminal-body label {
+  margin-right: 5px;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: #33ff33;
+  outline: none;
+  font-family: monospace;
+  font-size: 16px;
+  flex: 1;
 }

@@ -16,6 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "https://meet.google.com/";
     });
   }
+  const ct = document.getElementById("ct")
+  if (ct){
+    ct.addEventListener("click", () => {
+      closeOverlay();
+    });
+  }
+  const input = document.getElementById("terminalInput");
+  if (input){
+    input.addEventListener("blur", () => {
+      closeOverlay();
+    });
+  }
 });
 
 setInterval(() => { meTime(); }, 1000);
@@ -162,11 +174,18 @@ const triggers = [
   }),
 
   new TriggerWord('yes', () => { alert('OK'); }),
+  new TriggerWord('cmd', () => { openOverlay(); } ),
 ];
 
 document.addEventListener('keydown', (event) => {
   // Ignore special keys like Shift, Ctrl, etc.
   if (event.key.length === 1) {
+
+    const input = document.getElementById("terminalInput");
+    if (document.activeElement === input) {
+      return;
+    }
+
     latestKey = event.key;
     typedBuffer += latestKey;
 
@@ -181,5 +200,55 @@ document.addEventListener('keydown', (event) => {
         trigger.action(); // Call the associated function
       }
     }
+  }
+});
+
+function openOverlay() {
+  const overlay = document.getElementById("commandOverlay");
+  overlay.style.display = "flex";
+  setTimeout(() => {
+    document.getElementById("terminalInput").focus();
+  }, 50);
+}
+
+function closeOverlay() {
+  document.getElementById("commandOverlay").style.display = "none";
+}
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    const command = e.target.value.trim();
+    const args = command.trim().split(/\s+/);
+    if (args.length > 0){
+      if (args[0].toLowerCase() === "color"){
+        if (args.length > 1 && args[1].startsWith('#')){
+          document.documentElement.style.setProperty('--main-color', args[1]);
+        }
+      }
+      else if (args[0].toLowerCase() === "sec-color"){
+        if (args.length > 1 && args[1].startsWith('#')){
+          document.documentElement.style.setProperty('--sec-color', args[1]);
+        }
+      }
+      else if (args[0].toLowerCase() === "back-color"){
+        if (args.length > 1 && args[1].startsWith('#')){
+          document.documentElement.style.setProperty('--background-color', args[1]);
+        }
+      }
+      else if (args[0].toLowerCase() === "site"){
+        if (args.length > 1){
+          let domain = "com"
+          if (args.length > 2){
+            domain = args[2];
+          }
+          window.location.href = "https://" + args[1] + "." + domain;
+        }
+      }
+    }
+    e.target.value = ""; // Clear input after command
+    closeOverlay();
+  }
+  if (e.key === "Escape") {
+    closeOverlay();
   }
 });
