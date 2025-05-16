@@ -42,6 +42,9 @@ h1 {
     transition: all 0.3s ease;
     font-size: 25px;
   }
+.time {
+    margin-top: 200px;
+  }
 
 p {
     color: var(--sec-color);
