@@ -33,8 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
 setInterval(() => { meTime(); }, 1000);
 setInterval(() => { meUser(); }, 700);
 
-let qMark = false;
-
 function meTime(){
   const element = document.getElementById("datetime");
   if (element)
@@ -53,6 +51,9 @@ function meTime(){
     console.error("Element with id 'datetime' not found.");
   }
 }
+
+let qMark = false;
+
 function meUser(){
   const user = document.getElementById("user");
   if (user)
@@ -102,6 +103,10 @@ class TriggerWord {
 
 let latestKey = '';
 let typedBuffer = '';
+let isAnim = false;
+let isInInter = false;
+let colorIndex = 0;
+let colorList = ["green", "lime", "yellow", "gold", "orange", "brown", "red", "megenta", "pink", "purple", "blue", "cyan", "teal"];
 const triggers = [
   new TriggerWord('meet', () => { window.location.href = "https://meet.google.com/"; } ),
   new TriggerWord('gmail', () => { window.location.href = "https://mail.google.com/mail/u/0/#inbox"; } ),
@@ -167,10 +172,54 @@ const triggers = [
     document.documentElement.style.setProperty('--sec-color', '#5cffbb');
     document.documentElement.style.setProperty('--background-color', '#00000016');
   }),
+  new TriggerWord('lime', () => {
+    document.documentElement.style.setProperty('--main-color', '#a9ff00');
+    document.documentElement.style.setProperty('--sec-color', '#ccff68');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
+  new TriggerWord('brown', () => {
+    document.documentElement.style.setProperty('--main-color', '#a34401');
+    document.documentElement.style.setProperty('--sec-color', '#b7784c');
+    document.documentElement.style.setProperty('--background-color', '#00000016');
+  }),
   new TriggerWord('black', () => {
     document.documentElement.style.setProperty('--main-color', '#000000');
     document.documentElement.style.setProperty('--sec-color', '#000000');
     document.documentElement.style.setProperty('--background-color', '#ffffff16');
+  }),
+
+  new TriggerWord('anim', () => {
+    if (isAnim)
+    {
+      isAnim = false;
+      colorIndex = 0;
+    }
+    else
+    {
+      isAnim = true;
+      colorIndex = 0;
+    }
+    if (isInInter === false)
+    {
+      setInterval(() => {
+        if (isAnim)
+        {
+          for (let i = 0; i < triggers.length; i++)
+          {
+            if (triggers[i].word === colorList[colorIndex])
+            {
+              triggers[i].action();
+            }
+          }
+          colorIndex++;
+          if (colorIndex > colorList.length)
+          {
+            colorIndex = 0;
+          }
+        }
+      }, 500);
+      isInInter = true;
+    }
   }),
 
   new TriggerWord('yes', () => { alert('OK'); }),
