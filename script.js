@@ -39,8 +39,8 @@ function meTime(){
   {
     var now = new Date();
     let hours = now.getHours();
-    hours = hours % 12 || 12; // Converts "0" (midnight) to "12"
     const amPm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Converts "0" (midnight) to "12"
     var datetime = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear()
     + " " + getDayName(now.getDay()) + " " + hours + ":"
     + now.getMinutes().toString().padStart(2, "0") + " " + amPm;
